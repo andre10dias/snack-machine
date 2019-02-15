@@ -8,26 +8,35 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Maquina implements Serializable {
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Double preco;
 	
-	@ManyToMany(mappedBy="maquinas")
-	private List<Produto> produtos = new ArrayList<>();
-	
-	public Maquina() {}
+	@ManyToMany
+	@JoinTable(name = "PRODUTO_MAQUINA",
+		joinColumns = @JoinColumn(name = "produto_id"),
+		inverseJoinColumns = @JoinColumn(name = "maquina_id")
+	)
+	private List<Maquina> maquinas = new ArrayList<>();
 
-	public Maquina(Integer id, String nome) {
+	public Produto() {
+	}
+
+	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 
 	public Integer getId() {
@@ -46,14 +55,22 @@ public class Maquina implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
+	public List<Maquina> getMaquinas() {
+		return maquinas;
+	}
+
+	public void setMaquinas(List<Maquina> maquinas) {
+		this.maquinas = maquinas;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -70,7 +87,7 @@ public class Maquina implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Maquina other = (Maquina) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -78,6 +95,5 @@ public class Maquina implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }
