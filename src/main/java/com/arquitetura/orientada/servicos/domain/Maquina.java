@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Maquina implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,16 +20,19 @@ public class Maquina implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private String localizacao;
 	
+	@JsonManagedReference
 	@ManyToMany(mappedBy="maquinas")
 	private List<Produto> produtos = new ArrayList<>();
 	
 	public Maquina() {}
 
-	public Maquina(Integer id, String nome) {
+	public Maquina(Integer id, String nome, String localizacao) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.localizacao = localizacao;
 	}
 
 	public Integer getId() {
@@ -52,6 +57,14 @@ public class Maquina implements Serializable {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public String getLocalizacao() {
+		return localizacao;
+	}
+
+	public void setLocalizacao(String localizacao) {
+		this.localizacao = localizacao;
 	}
 
 	@Override

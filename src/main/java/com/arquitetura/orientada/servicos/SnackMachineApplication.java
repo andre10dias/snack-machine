@@ -27,17 +27,17 @@ public class SnackMachineApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Maquina maq1 = new Maquina(null, "Maquina 1");
-		Maquina maq2 = new Maquina(null, "Maquina 2");
-		Maquina maq3 = new Maquina(null, "Maquina 3");
-		Maquina maq4 = new Maquina(null, "Maquina 4");
-		Maquina maq5 = new Maquina(null, "Maquina 5");
+		Maquina maq1 = new Maquina(null, "Maquina 1", "Piso L1, próximo ao bompreço.");
+		Maquina maq2 = new Maquina(null, "Maquina 2", "Estacionamento G2, Setor B4.");
+		Maquina maq3 = new Maquina(null, "Maquina 3", "Estacionamento G1, Setor E3.");
+		Maquina maq4 = new Maquina(null, "Maquina 4", "Piso L2, próximo ao sanitário masculino.");
+		Maquina maq5 = new Maquina(null, "Maquina 5", "Piso L3, Praça de alimentação.");
 		
-		Produto p1 = new Produto(null, "Sanduíche Natural", 6.00);
-		Produto p2 = new Produto(null, "Coockies", 4.00);
-		Produto p3 = new Produto(null, "Água Mineral com Gás", 2.50);
-		Produto p4 = new Produto(null, "Água Mineral", 2.00);
-		Produto p5 = new Produto(null, "Barra de Cereal", 1.50);
+		Produto p1 = new Produto(null, "Sanduíche Natural", "P1SN", 6.00);
+		Produto p2 = new Produto(null, "Coockies", "P2CO", 4.00);
+		Produto p3 = new Produto(null, "Água Mineral com Gás", "P3AC", 2.50);
+		Produto p4 = new Produto(null, "Água Mineral", "P4AS", 2.00);
+		Produto p5 = new Produto(null, "Barra de Cereal", "P5BC", 1.50);
 		
 		maq1.getProdutos().addAll(Arrays.asList(p1, p1, p1, p1, p1, p2, p2, p3, p4, p4, p5, p5, p5));
 		maq2.getProdutos().addAll(Arrays.asList(p1, p2, p2, p3, p3, p3, p3, p3, p5, p5));

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.arquitetura.orientada.servicos.domain.Maquina;
 import com.arquitetura.orientada.servicos.repositories.MaquinaRepository;
+import com.arquitetura.orientada.servicos.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class MaquinaService {
@@ -16,6 +17,7 @@ public class MaquinaService {
 	
 	public Maquina find(Integer id) {
 		Optional<Maquina> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Maquina.class.getName()));
 	}
 }
