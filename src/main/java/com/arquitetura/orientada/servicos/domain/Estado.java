@@ -1,38 +1,34 @@
 package com.arquitetura.orientada.servicos.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Pedido implements Serializable {
+public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private Date data;
+	private String nome;
 	
-	@JsonManagedReference
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
-	private Pagamento pagamento;
-
-	public Pedido() {
-		// TODO Auto-generated constructor stub
+	@OneToMany(mappedBy="estado")
+	private List<Cidade> cidades = new ArrayList<>();
+	
+	public Estado() {
 	}
 
-	public Pedido(Integer id, Date data) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
-		this.data = data;
+		this.nome = nome;
 	}
 
 	public Integer getId() {
@@ -43,20 +39,20 @@ public class Pedido implements Serializable {
 		this.id = id;
 	}
 
-	public Date getData() {
-		return data;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public Pagamento getPagamento() {
-		return pagamento;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setPagamento(Pagamento pagamento) {
-		this.pagamento = pagamento;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -75,7 +71,7 @@ public class Pedido implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pedido other = (Pedido) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,5 +79,7 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
 }

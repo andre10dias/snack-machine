@@ -1,6 +1,5 @@
 package com.arquitetura.orientada.servicos;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +7,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.arquitetura.orientada.servicos.domain.Cidade;
+import com.arquitetura.orientada.servicos.domain.Estado;
 import com.arquitetura.orientada.servicos.domain.Maquina;
-import com.arquitetura.orientada.servicos.domain.Pagamento;
-import com.arquitetura.orientada.servicos.domain.PagamentoCartao;
-import com.arquitetura.orientada.servicos.domain.PagamentoPayPal;
-import com.arquitetura.orientada.servicos.domain.Pedido;
 import com.arquitetura.orientada.servicos.domain.Produto;
-import com.arquitetura.orientada.servicos.domain.enums.EstadoPagamento;
+import com.arquitetura.orientada.servicos.repositories.CidadeRepository;
+import com.arquitetura.orientada.servicos.repositories.EstadoRepository;
 import com.arquitetura.orientada.servicos.repositories.MaquinaRepository;
-import com.arquitetura.orientada.servicos.repositories.PagamentoRepository;
-import com.arquitetura.orientada.servicos.repositories.PedidoRepository;
 import com.arquitetura.orientada.servicos.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -27,13 +23,13 @@ public class SnackMachineApplication implements CommandLineRunner {
 	private MaquinaRepository maquinaRepository;
 	
 	@Autowired
-	private PedidoRepository pedidoRepository;
-	
-	@Autowired
-	private PagamentoRepository pagamentoRepository;
-	
-	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private CidadeRepository cidadeRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SnackMachineApplication.class, args);
@@ -68,19 +64,20 @@ public class SnackMachineApplication implements CommandLineRunner {
 		maquinaRepository.saveAll(Arrays.asList(maq1, maq2, maq3, maq4, maq5));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm");
-		Pedido ped1 = new Pedido(null, sdf.parse("15/02/2019 13:37"));
-		Pedido ped2 = new Pedido(null, sdf.parse("14/02/2019 17:33"));
+		Estado est1 = new Estado(null, "Bahia");
+		Estado est2 = new Estado(null, "São Paulo");
 		
-		Pagamento pag1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 1);
-		ped1.setPagamento(pag1);
+		Cidade c1 = new Cidade(null, "São Paulo", est2);
+		Cidade c2 = new Cidade(null, "São Vincente", est2);
+		Cidade c3 = new Cidade(null, "Salvador", est1);
 		
-		Pagamento pag2 = new PagamentoPayPal(null, EstadoPagamento.PENDENTE, ped2, null);
-		ped2.setPagamento(pag2);
+		est1.getCidades().addAll(Arrays.asList(c3));
+		est2.getCidades().addAll(Arrays.asList(c1, c2));
 		
-		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
-		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
-
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		
 	}
 
 }
