@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
@@ -21,18 +21,27 @@ public class Pedido implements Serializable {
 	private Integer id;
 	private Date data;
 	
-	@JsonManagedReference
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	private Pagamento pagamento;
+	
+	@ManyToOne
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name="enderecoEntrega_id")
+	private Endereco enderecoEntrega;
 
 	public Pedido() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pedido(Integer id, Date data) {
+	public Pedido(Integer id, Date data, Cliente cliente, Endereco enderecoEntrega) {
 		super();
 		this.id = id;
 		this.data = data;
+		this.cliente = cliente;
+		this.enderecoEntrega = enderecoEntrega;
 	}
 
 	public Integer getId() {
@@ -59,6 +68,22 @@ public class Pedido implements Serializable {
 		this.pagamento = pagamento;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Endereco getEnderecoEntrega() {
+		return enderecoEntrega;
+	}
+
+	public void setEnderecoEntrega(Endereco enderecoEntrega) {
+		this.enderecoEntrega = enderecoEntrega;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,5 +108,7 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
 }

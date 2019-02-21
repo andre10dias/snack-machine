@@ -2,7 +2,7 @@ package com.arquitetura.orientada.servicos.domain;
 
 import javax.persistence.Entity;
 
-import com.arquitetura.orientada.servicos.domain.enums.EstadoPagamento;
+import com.arquitetura.orientada.servicos.domain.Enums.EstadoPagamento;
 
 @Entity
 public class PagamentoCartao extends Pagamento {

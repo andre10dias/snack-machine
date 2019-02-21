@@ -10,8 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.arquitetura.orientada.servicos.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.arquitetura.orientada.servicos.domain.Enums.EstadoPagamento;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -20,9 +19,8 @@ public abstract class Pagamento implements Serializable {
 	
 	@Id
 	private Integer id;
-	private EstadoPagamento estadoPagamento;
+	private Integer estadoPagamento;
 	
-	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId
@@ -35,7 +33,7 @@ public abstract class Pagamento implements Serializable {
 	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCodigo();
 		this.pedido = pedido;
 	}
 
@@ -48,11 +46,11 @@ public abstract class Pagamento implements Serializable {
 	}
 
 	public EstadoPagamento getEstadoPagamento() {
-		return estadoPagamento;
+		return EstadoPagamento.toEnum(estadoPagamento);
 	}
 
 	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCodigo();
 	}
 
 	public Pedido getPedido() {
@@ -87,5 +85,6 @@ public abstract class Pagamento implements Serializable {
 			return false;
 		return true;
 	}
+	
 
 }
